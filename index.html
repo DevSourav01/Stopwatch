@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="/stye.css" />
+  </head>
+  <body>
+    <div class="stopwatch-container">
+      <div class="stopwatch">
+        <span class="hour">00</span>
+        <span class="minute">:00</span>
+        <span class="second">:00</span>
+      </div>
+      <div class="stopwatch-button">
+        <button onclick="watchStart()">Start</button> &nbsp;
+        <button onclick="watchStop()">Stop</button> &nbsp;
+        <button onclick="watchReset()">Reset</button> &nbsp;
+      </div>
+    </div>
+    <script>
+      let hour = 0,
+        minute = 0,
+        seconds = 0;
+      let timer = null;
+
+      const hourEl = document.querySelector(".hour");
+      const minuteEl = document.querySelector(".minute");
+      const secondEl = document.querySelector(".second");
+
+      function stopWatch() {
+        seconds++;
+        if (seconds == 60) {
+          seconds = 0;
+          minute++;
+          if (minute == 60) {
+            minute = 0;
+            hour++;
+          }
+        }
+
+        // Update UI with correct values
+        hourEl.textContent = hour < 10 ? "0" + hour : hour;
+        minuteEl.textContent = (minute < 10 ? ":0" : ":") + minute;
+        secondEl.textContent = (seconds < 10 ? ":0" : ":") + seconds;
+      }
+
+      function watchStart() {
+        if (timer !== null) {
+          clearInterval(timer);
+        }
+        timer = setInterval(stopWatch, 1000);
+      }
+
+      function watchStop() {
+        clearInterval(timer);
+      }
+
+      function watchReset() {
+        clearInterval(timer);
+        hour = 0;
+        minute = 0;
+        seconds = 0;
+
+        // Reset UI
+        hourEl.textContent = "00";
+        minuteEl.textContent = ":00";
+        secondEl.textContent = ":00";
+      }
+    </script>
+  </body>
+</html>
